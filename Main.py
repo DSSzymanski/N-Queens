@@ -1,7 +1,40 @@
-from copy import deepcopy
-import Board
+"""
+Module containing the main algorithms for solving the N-Queens puzzle.
 
-def find_solutions(size: int) -> None:
+Usage
+_____
+One solution: solving for any solution to the N-Queens problem, call
+find_solution. This method uses backtracking to solve the N-Queens problem.
+The method takes in an int to determine board size and will print the first
+solution found to the console or will print no solution found.
+
+Ex. find_solution(4) will write the first solution found to the console.
+
+All solutions: solving for all solutions to the N-Queens problem, call
+all_solutions. This method also uses backtracking to solve the N-Queens
+problem. The method takes in an int to determine board size and will print all
+the solutions found to the console or will print no solution found.
+
+Ex. all_solutions(4) will print every valid solution to the console.
+
+Methods
+_______
+:method all_solutions(size: int): solves for every solution of the N-Queens
+    puzzle of the input size and prints them all (or none found) to console.
+:method find_solution(size: int): solves for a single solution of the N-Queens
+    puzzle of the input size and prints the solution (or none found) to the
+    console.
+:method solve_all: actual algorithm for finding all the solutions (everything
+    from all_solutions but the console printing). Takes a board, the current
+    col and a list of completed boards as input and recursively backtracks to
+    find the solutions. Returns list of completed solutions.
+
+"""
+
+from copy import deepcopy
+from board import Board
+
+def all_solutions(size: int) -> None:
     """
     Main function for finding every solution given a board size of size.
     Will print all completed board states to console if solution is found.
@@ -9,7 +42,7 @@ def find_solutions(size: int) -> None:
     :param size: int representing size of board to find a solution for
     """
     print(f"Results for board of size {size}:")
-    board = Board.Board(size)
+    board = Board(size)
     results = solve_all(col=0, board=board, results=[])
     if results == []:
         print(f"No valid arrangement for board of size {size}\n")
@@ -46,7 +79,7 @@ def find_solution(size: int) -> None:
     Will print "not found" if there is no solution for a board of size size.
     :param size: int representing size of board to find a solution for
     """
-    board = Board.Board(size)
+    board = Board(size)
     if not solve_one(col=0, board=board):
         print(f"No valid arrangement for board of size {size}")
         return
@@ -137,6 +170,3 @@ def lower_diagonal_constraint(board: Board, row: int, col: int) -> bool:
         row += 1
         col -= 1
     return True
-
-#find_solution(4)
-find_solutions(4)
